@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package service;
+
+option go_package = "multiplayer-modes-service/internal/models;models";
+
+service MultiplayerService {
+  rpc GetPopularModes (PopularModesRequest) returns (PopularModesResponse);
+  rpc ReportModePlaying (ModePlayingRequest) returns (ModePlayingResponse);
+}
+
+message PopularModesRequest {
+  string area_code = 1;
+}
+
+message PopularModesResponse {
+  repeated Mode modes = 1;
+}
+
+message Mode {
+  string name = 1;
+  int32 player_count = 2;
+}
+
+message ModePlayingRequest {
+  string area_code = 1;
+  string mode_name = 2;
+}
+
+message ModePlayingResponse {
+  string status = 1;
+}
