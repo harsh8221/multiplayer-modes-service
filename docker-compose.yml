@@ -9,9 +9,9 @@ services:
     ports: 
       - "8080:8080"
     depends_on:
-      mongo:
+      mongo_db:
         condition: service_healthy
-      redis:
+      redis_cache:
         condition: service_healthy
     volumes:
       - .:/app
@@ -22,7 +22,7 @@ services:
       timeout: 10s
       retries: 5
 
-  redis:
+  redis_cache:
     image: redis:alpine
     container_name: redis_cache
     ports: 
@@ -33,7 +33,7 @@ services:
       timeout: 5s
       retries: 5
     
-  mongo: 
+  mongo_db: 
     image: mongo:6.0.9
     container_name: mongo_db
     ports: 
