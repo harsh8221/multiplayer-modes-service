@@ -5,7 +5,7 @@ run:
 	go run cmd/api/main.go
 
 test:
-	go test ./...
+	go test ./... -cover
 
 docker-build:
 	docker build -t multiplayer-modes-app . 
