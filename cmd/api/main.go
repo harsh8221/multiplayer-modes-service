@@ -34,7 +34,8 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	// Register Services
-	pb.RegisterMultiplayerServiceServer(grpcServer, &handlers.MultiplayerServiceServer{})
+	server := handlers.NewMultiplayerServiceServer()
+	pb.RegisterMultiplayerServiceServer(grpcServer, server)
 
 	log.Printf("Server listening on port %s", port)
 
