@@ -9,26 +9,45 @@ services:
     ports: 
       - "8080:8080"
     depends_on:
-      - redis
-      - mongo
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     volumes:
       - .:/app
+    command: ["./wait-for-it.sh", "mongo_db:27017", "--", "go", "run", "cmd/api/main.go"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   redis:
     image: redis:alpine
     container_name: redis_cache
     ports: 
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     
   mongo: 
-    image: mongo:latest
+    image: mongo:6.0.9
     container_name: mongo_db
     ports: 
       - "27017:27017"
     environment: 
-      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+      MONGO_INITDB_DATABASE: multiplayer_modes_db
     volumes:
-      - mongo-delta:/data/db
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh --quiet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
     
 volumes:
-  mongo-delta:
+  mongo-data:

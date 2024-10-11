@@ -11,10 +11,10 @@ docker-build:
 	docker build -t multiplayer-modes-app . 
 
 docker-run: 
-	docker run -p ${PORT}:${PORT} --env-file .env multiplayer-modes-app
+	docker run -p 8080:8080 --env-file .env multiplayer-modes-app
 
-docker-compose-up: 
-	docker-compose up -build
+dp: 
+	docker-compose up --build 
 
-docker-compose-down:
+dw:
 	docker-compose down
