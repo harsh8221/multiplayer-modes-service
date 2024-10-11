@@ -1,5 +1,8 @@
 # Start from the official Golang image
-FROM golang:1.16-alpine
+FROM golang:1.23-alpine AS builder
+
+#Install Bash
+RUN apk add --no-cache bash
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -20,4 +23,4 @@ RUN chmod +x wait-for-it.sh
 EXPOSE 8080
 
 # Command to run when starting the container
-CMD ["./wait-for-it.sh", "mongo-db:27017", "--", "go", "run", "cmd/api/main.go"]
+CMD ["go", "run", "cmd/api/main.go"]

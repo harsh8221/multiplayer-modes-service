@@ -8,6 +8,8 @@ import (
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 
+	"google.golang.org/grpc/reflection"
+
 	"multiplayer-modes-service/internal/handlers"
 	pb "multiplayer-modes-service/internal/models"
 )
@@ -36,6 +38,9 @@ func main() {
 	// Register Services
 	server := handlers.NewMultiplayerServiceServer()
 	pb.RegisterMultiplayerServiceServer(grpcServer, server)
+
+	// Enable reflection
+  reflection.Register(grpcServer)
 
 	log.Printf("Server listening on port %s", port)
 
