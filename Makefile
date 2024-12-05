@@ -13,8 +13,8 @@ docker-build:
 docker-run: 
 	docker run -p 8080:8080 --env-file .env multiplayer-modes-app
 
-dp: 
+docker-compose-up: 
 	docker-compose up --build 
 
-dw:
+docker-compose-down:
 	docker-compose down

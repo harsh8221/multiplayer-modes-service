@@ -28,12 +28,12 @@ func TestGetPopularModesHandler(t *testing.T) {
 	handler := &MultiplayerServiceServer{logic: mockLogic}
 
 	mockModes := []*pb.Mode{
-		{Name: "Battle Royale", Count: 10},
+		{Name: "Battle Royale", PlayerCount: 10},
 	}
 
 	mockLogic.On("GetPopularModes", mock.Anything, "123").Return(mockModes, nil)
 
-	req := &pb.GetPopularModesRequest{AreaCode: "123"}
+	req := &pb.PopularModesRequest{AreaCode: "123"}
 	resp, err := handler.GetPopularModes(context.Background(), req)
 	require.NoError(t, err, "GetPopularModes Failed")
 	require.Equal(t, mockModes, resp.Modes)
@@ -45,8 +45,8 @@ func TestReportModePlayingHandler(t *testing.T) {
 
 	mockLogic.On("ReportModePlaying", mock.Anything, "123", "Battle Royale").Return(nil)
 
-	req := &pb.ReportModePlayingRequest{AreaCode: "123", ModeName: "Battle Royale"}
-	_, err := handler.ReportModePlaying(context.Background(), req)
+	req := &pb.ModePlayingRequest{AreaCode: "123", ModeName: "Battle Royale"}
+	resp, err := handler.ReportModePlaying(context.Background(), req)
 	require.NoError(t, err, "ReportModePlaying handler failed")
 	require.Equal(t, "success", resp.Status)
 }

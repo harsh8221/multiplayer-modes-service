@@ -31,7 +31,7 @@ func (b *BusinessLogic) ReportModePlaying(ctx context.Context, areaCode, modeNam
 
 	err = b.cache.InvalidatePopularModes(areaCode)
 	if err != nil {
-		log.Printf("Failed to invalidate cache: %v", areaCode, err)
+		log.Printf("Failed to invalidate cache: %v", err)
 	}
 	return nil
 }
@@ -40,7 +40,7 @@ func (b *BusinessLogic) GetPopularModes(ctx context.Context, areaCode string) ([
 
 	data, err := b.cache.GetPopularModes(areaCode)
 	if err != nil {
-		log.Printf("Failed to get popular modes from cache: %v", areaCode, err)
+		log.Printf("Failed to get popular modes from cache: %v", err)
 	}
 
 	if data != nil {
@@ -49,7 +49,7 @@ func (b *BusinessLogic) GetPopularModes(ctx context.Context, areaCode string) ([
 		if err != nil {
 			return modes, err
 		}
-		log.Printf("Cache hit for popular modes: %v", areaCode, err)
+		log.Printf("Cache hit for popular modes: %v", err)
 	}
 
 	// Cache miss or unmarshalling error, fetch from storage
@@ -68,7 +68,7 @@ func (b *BusinessLogic) GetPopularModes(ctx context.Context, areaCode string) ([
 
 	err = b.cache.SetPopularModes(areaCode, modes)
 	if err != nil {
-		log.Printf("Failed to set popular modes in cache: %v", areaCode, err)
+		log.Printf("Failed to set popular modes in cache: %v", err)
 	}
 
 	return modes, nil

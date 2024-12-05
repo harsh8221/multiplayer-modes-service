@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"mutliplayer-modes-service/internal/test"
+	"multiplayer-modes-service/internal/test"
 )
 
 func TestIncrementModeCount(t *testing.T) {
